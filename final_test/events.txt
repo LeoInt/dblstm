@@ -1,0 +1,39 @@
+==8448== NVPROF is profiling process 8448, command: /home/ubuntu/dblstm/rnn/final_test/standard/app 50 2 128
+==8448== Profiling application: /home/ubuntu/dblstm/rnn/final_test/standard/app 50 2 128
+==8448== Profiling result:
+==8448== Event result:
+Invocations                                Event Name         Min         Max         Avg
+Device "GK20A (0)"
+	Kernel: void gen_sequenced<curandStateXORWOW, float2, normal_args_st, __operator_&__(float2 curand_normal_scaled2<curandStateXORWOW>(curandStateXORWOW*, normal_args_st))>(curandStateXORWOW*, float2*, unsigned int, unsigned int, normal_args_st)
+         26        l2_subp0_total_read_sector_queries         234       24741        9006
+         26                         l1_local_load_hit           0           0           0
+	Kernel: add_pw_vecMul(float*, float*, float*, int)
+        600        l2_subp0_total_read_sector_queries          71         164         106
+        600                         l1_local_load_hit           0           0           0
+	Kernel: generate_seed_pseudo(__int64, __int64, __int64, curandOrdering, curandStateXORWOW*, unsigned int*)
+          3        l2_subp0_total_read_sector_queries     4841143     4846113     4842808
+          3                         l1_local_load_hit           0           0           0
+	Kernel: pw_sigmoid(float*, float*, int)
+        600        l2_subp0_total_read_sector_queries          47         179         103
+        600                         l1_local_load_hit           0           0           0
+	Kernel: pw_tanh(float*, float*, int)
+        400        l2_subp0_total_read_sector_queries          47         149          84
+        400                         l1_local_load_hit           0           0           0
+	Kernel: add_vec_to_rows(float, float*, float, float*, int, int)
+          1        l2_subp0_total_read_sector_queries         730         730         730
+          1                         l1_local_load_hit           0           0           0
+	Kernel: void gemv2N_kernel_val<float, int=128, int=8, int=4, int=4>(float, float, cublasGemv2Params<float>)
+        200        l2_subp0_total_read_sector_queries        8823        8996        8853
+        200                         l1_local_load_hit           0           0           0
+	Kernel: _softmax_reduce(float*, float*, int, int)
+          1        l2_subp0_total_read_sector_queries        1226        1226        1226
+          1                         l1_local_load_hit           0           0           0
+	Kernel: pw_vecMul(float*, float*, float*, int)
+        800        l2_subp0_total_read_sector_queries          55         150          81
+        800                         l1_local_load_hit           0           0           0
+	Kernel: sgemm_sm35_ldg_nn_64x16x64x16x16
+          5        l2_subp0_total_read_sector_queries        4055       29685       17913
+          5                         l1_local_load_hit           0           0           0
+	Kernel: pw_vecAdd(float*, float*, float*, int)
+        200        l2_subp0_total_read_sector_queries          71         115          85
+        200                         l1_local_load_hit           0           0           0

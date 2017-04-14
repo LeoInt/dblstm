@@ -1,0 +1,6 @@
+nvcc -c main.cu -arch=sm_30 -O3  -lcublas -lcurand -o main.o
+nvcc -c layer.cu -arch=sm_30 -O3 -lcublas -lcurand -o layer.o
+nvcc -c AffineTransform.cu -arch=sm_30 -O3 -lcublas -lcurand -o AffineTransform.o
+nvcc -c net.cu -arch=sm_30 -O3 -lcublas -lcurand -o net.o
+nvcc -c kernels.cu -arch=sm_30 -O3 -lcublas -lcurand -o kernels.o
+make

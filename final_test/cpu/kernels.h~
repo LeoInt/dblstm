@@ -1,0 +1,38 @@
+#ifndef KERNELS_H_
+#define KERNELS_H_
+
+#define CU1DBLOCK 256
+#include <sstream>
+
+extern "C"
+{
+   #include "/home/ubuntu/OpenBlas/include/cblas.h"
+}
+//#include <curand.h>
+#include <fstream>
+#include <stdio.h>
+//#include <curand_kernel.h>
+
+extern "C" {
+
+
+// Device functions
+
+// Pointwise functions
+ void pw_biasAdd_w(float *y, float *bias, int n, int nBias);
+
+ void pw_vecAdd_w( float *y, float *a,  float *b, int n);
+
+ void pw_vecMul_w( float *y, float *a,  float *b, int n);
+
+ void pw_tanh_w( float *y, float *a, int n);
+
+ void pw_sigmoid_w(float *y, float *a, int n);
+ void add_pw_vecMul_w(float *y, float *a,  float *b, int n);
+
+void elementWise_fp_w(int hiddenSize, float *tmp_h, float *tmp_i, float *bias, float *phole_i, float *phole_f, float *phole_o, float *h_out, float *i_out, float *c_in, float *c_out);
+
+void add_vec_to_rows_w(float alpha, float* row, float beta, float* dst, int nrow, int ncol);
+void generate_random_numbers_cu(float* numbers, int Np);
+}
+#endif

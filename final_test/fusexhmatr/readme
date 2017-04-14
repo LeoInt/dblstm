@@ -1,0 +1,6 @@
+////no better perf with respect to lowmem because even if we have 2 less gemv the total number data to read from memory for each iteration is basically the same 
+////in the imple which uses cublasgemm we have better perf because we read some data of W_x matrix only once!!!!!!!! this is the best advantage
+////when considering performance count the number of data to be read on each iteration not the number of mul add
+/////////////////////////////////finish impl for correctness, fuse is not correct, data_ is not set correctly!
+
+not testet for correctness, only performance

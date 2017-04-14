@@ -1,0 +1,29 @@
+==23733== NVPROF is profiling process 23733, command: /home/ubuntu/dblstm/rnn/final_test/standard/app 16 2 128
+==23733== Warning: Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==23733== Profiling application: /home/ubuntu/dblstm/rnn/final_test/standard/app 16 2 128
+==23733== Profiling result:
+==23733== Metric result:
+Invocations                               Metric Name                        Metric Description         Min         Max         Avg
+Device "GK20A (0)"
+	Kernel: void gen_sequenced<curandStateXORWOW, float2, normal_args_st, __operator_&__(float2 curand_normal_scaled2<curandStateXORWOW>(curandStateXORWOW*, normal_args_st))>(curandStateXORWOW*, float2*, unsigned int, unsigned int, normal_args_st)
+         26                         shared_efficiency                  Shared Memory Efficiency       0.00%       0.00%       0.00%
+	Kernel: add_pw_vecMul(float*, float*, float*, int)
+        192                         shared_efficiency                  Shared Memory Efficiency       0.00%       0.00%       0.00%
+	Kernel: generate_seed_pseudo(__int64, __int64, __int64, curandOrdering, curandStateXORWOW*, unsigned int*)
+          3                         shared_efficiency                  Shared Memory Efficiency       0.00%       0.00%       0.00%
+	Kernel: pw_sigmoid(float*, float*, int)
+        192                         shared_efficiency                  Shared Memory Efficiency       0.00%       0.00%       0.00%
+	Kernel: pw_tanh(float*, float*, int)
+        128                         shared_efficiency                  Shared Memory Efficiency       0.00%       0.00%       0.00%
+	Kernel: add_vec_to_rows(float, float*, float, float*, int, int)
+          1                         shared_efficiency                  Shared Memory Efficiency       0.00%       0.00%       0.00%
+	Kernel: void gemv2N_kernel_val<float, int=128, int=8, int=4, int=4>(float, float, cublasGemv2Params<float>)
+         64                         shared_efficiency                  Shared Memory Efficiency      69.26%      69.26%      69.26%
+	Kernel: _softmax_reduce(float*, float*, int, int)
+          1                         shared_efficiency                  Shared Memory Efficiency      15.23%      15.23%      15.23%
+	Kernel: pw_vecMul(float*, float*, float*, int)
+        256                         shared_efficiency                  Shared Memory Efficiency       0.00%       0.00%       0.00%
+	Kernel: sgemm_sm35_ldg_nn_64x16x64x16x16
+          5                         shared_efficiency                  Shared Memory Efficiency     152.49%     153.50%     153.10%
+	Kernel: pw_vecAdd(float*, float*, float*, int)
+         64                         shared_efficiency                  Shared Memory Efficiency       0.00%       0.00%       0.00%

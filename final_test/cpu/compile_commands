@@ -1,0 +1,6 @@
+g++ -c main.cpp -O3 -I/opt/OpenBlas/include -o main.o
+g++ -c layer.cpp -O3 -I/opt/OpenBlas/include -o layer.o
+g++ -c AffineTransform.cpp  -O3 -I/opt/OpenBlas/include -o AffineTransform.o
+g++ -c net.cpp  -O3 -I/opt/OpenBlas/include -o net.o
+g++ -c kernels.cpp  -O3 -I/opt/OpenBlas/include -o kernels.o
+g++  -L/opt/OpenBlas/lib main.o net.o layer.o AffineTransform.o kernels.o -lopenblas -o app

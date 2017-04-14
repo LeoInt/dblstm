@@ -1,0 +1,135 @@
+#include "net.h"
+//#include "layer.h"
+
+
+Net::Net(int nLayers, int cell_dim) {
+  // copy the layers
+  //input_buf_dim_=input_buf_dim;
+  cell_dim_=cell_dim;
+  //layers_=NULL;
+
+  //input_buf_ = NULL; ///< buffers for forward pass
+  propagate_buf_ = NULL; ///< buffers for forward pass
+  tmp_h_fw_n = NULL;
+  tmp_i_fw_n = NULL;
+
+    // back-propagation buffer
+  tmp_h_bw_n = NULL;
+  tmp_i_bw_n = NULL;
+
+  h_data_n = NULL;
+  c_data_n = NULL;
+  
+  h_data_bw_n = NULL;
+  c_data_bw_n = NULL;
+
+  /*for(int i=0; i<nLayers; i++) {
+    Layer* L=NULL;
+    layers_.push_back(L);
+  }*/    
+  // create empty buffers
+  //propagate_buf_.resize(NumLayers()+1); 
+}
+
+
+Net::~Net() {
+  //cudaErrCheck(cudaFree(input_buf_));
+  free(propagate_buf_); //2 buffers
+  free(h_data_n);
+  free(c_data_n);
+  free(c_data_bw_n);
+  free(h_data_bw_n);
+  free(tmp_h_fw_n);
+  free(tmp_i_fw_n);
+  free(tmp_h_bw_n);
+  free(tmp_i_bw_n);
+  Destroy();
+}
+
+void Net::Resize(int seqLength){
+  //cudaErrCheck(cudaFree(input_buf_));
+  //cudaErrCheck(cudaMalloc((void**)&input_buf_, seqLength * input_buf_dim_ * sizeof(float)));
+  free(propagate_buf_); //2 buffers
+  free(h_data_n);
+  free(c_data_n);
+  free(c_data_bw_n);
+  free(h_data_bw_n);
+  free(tmp_h_fw_n);
+  free(tmp_i_fw_n);
+  free(tmp_h_bw_n);
+  free(tmp_i_bw_n);
+  propagate_buf_=(float*)malloc(2* seqLength * 2 * cell_dim_ * sizeof(float)); //2 buffers
+  h_data_n=(float*)malloc( (seqLength+1) * cell_dim_ * sizeof(float));
+  c_data_n=(float*)malloc( (seqLength+1) * cell_dim_ * sizeof(float));
+  c_data_bw_n=(float*)malloc( (seqLength+1) * cell_dim_ * sizeof(float));
+  h_data_bw_n=(float*)malloc((seqLength+1) * cell_dim_ * sizeof(float));
+  tmp_h_fw_n=(float*)malloc(4 * cell_dim_ * sizeof(float));
+  tmp_i_fw_n=(float*)malloc((seqLength+1) * 4 * cell_dim_ * sizeof(float));
+  tmp_h_bw_n=(float*)malloc(4 * cell_dim_ * sizeof(float));
+  tmp_i_bw_n=(float*)malloc((seqLength+1) * 4 * cell_dim_ * sizeof(float));
+
+  for(int i=0;i<(seqLength+1)*cell_dim_;i++){
+  h_data_n[i]=0;
+  c_data_n[i]=0;
+  h_data_bw_n[i]=0;
+  c_data_bw_n[i]=0;
+  }
+}
+
+float Net::Feedforward( float* in, float* out, int seqLength) {
+  // we need at least 2 input buffers
+  // propagate by using exactly 2 auxiliary buffers
+  int L = 0;
+  double time=0.f;
+  
+  time+=layers_[L]->Propagate(in, propagate_buf_ + (L%2)*seqLength * 2 * cell_dim_, seqLength, tmp_h_fw_n, tmp_i_fw_n, tmp_h_bw_n, tmp_i_bw_n, h_data_n, c_data_n, h_data_bw_n, c_data_bw_n);
+  for(L++; L<NumLayers(); L++) {
+    time+=layers_[L]->Propagate( propagate_buf_ + ((L-1)%2)*seqLength*2*cell_dim_ ,propagate_buf_ + (L%2)*seqLength*2*cell_dim_, seqLength, tmp_h_fw_n, tmp_i_fw_n, tmp_h_bw_n, tmp_i_bw_n, h_data_n, c_data_n, h_data_bw_n, c_data_bw_n);
+  }
+  time+=Af_l_->Propagate( propagate_buf_ + ((L-1)%2)*seqLength*2*cell_dim_, out, seqLength);
+  printf("timing precise = %f ms", time*1000);
+  //layers_[L]->Propagate(propagate_buf_[(L-1)%2], out); //not commented
+  // release the buffers we don't need anymore
+return time;
+}
+
+
+int Net::OutputDim() {
+  return layers_.back()->OutputDim();
+}
+
+int Net::InputDim() {
+  return layers_.front()->InputDim();
+}
+
+
+Layer* Net::GetLayer(int layer) {
+  return layers_[layer];
+}
+
+void Net::SetLayer(int c, Layer *layer) {
+  delete layers_[c];
+  layers_[c] = layer;
+}
+
+void Net::AppendLayer(Layer* dynamically_allocated_layer) {
+  // append,
+  layers_.push_back(dynamically_allocated_layer);
+ }
+
+void Net::AppendAffineTransformLayer(AffineTransform *dynamically_allocated_AffineTransform){
+  Af_l_=dynamically_allocated_AffineTransform;
+}
+
+
+void Net::Destroy() {
+  for(int i=0; i<NumLayers(); i++) {
+    delete layers_[i];
+  }
+  delete Af_l_;
+  layers_.resize(0);
+  }
+
+
+
+

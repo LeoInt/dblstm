@@ -1,0 +1,28 @@
+==8389== NVPROF is profiling process 8389, command: /home/ubuntu/dblstm/rnn/final_test/standard/app 50 2 128
+==8389== Profiling application: /home/ubuntu/dblstm/rnn/final_test/standard/app 50 2 128
+==8389== Profiling result:
+==8389== Event result:
+Invocations                                Event Name         Min         Max         Avg
+Device "GK20A (0)"
+	Kernel: void gen_sequenced<curandStateXORWOW, float2, normal_args_st, __operator_&__(float2 curand_normal_scaled2<curandStateXORWOW>(curandStateXORWOW*, normal_args_st))>(curandStateXORWOW*, float2*, unsigned int, unsigned int, normal_args_st)
+         26        l2_subp0_total_read_sector_queries         173       24728        8981
+	Kernel: add_pw_vecMul(float*, float*, float*, int)
+        600        l2_subp0_total_read_sector_queries          71         175         107
+	Kernel: generate_seed_pseudo(__int64, __int64, __int64, curandOrdering, curandStateXORWOW*, unsigned int*)
+          3        l2_subp0_total_read_sector_queries     4844354     4858374     4852414
+	Kernel: pw_sigmoid(float*, float*, int)
+        600        l2_subp0_total_read_sector_queries          47         171         107
+	Kernel: pw_tanh(float*, float*, int)
+        400        l2_subp0_total_read_sector_queries          47         116          84
+	Kernel: add_vec_to_rows(float, float*, float, float*, int, int)
+          1        l2_subp0_total_read_sector_queries         717         717         717
+	Kernel: void gemv2N_kernel_val<float, int=128, int=8, int=4, int=4>(float, float, cublasGemv2Params<float>)
+        200        l2_subp0_total_read_sector_queries        8743        8987        8910
+	Kernel: _softmax_reduce(float*, float*, int, int)
+          1        l2_subp0_total_read_sector_queries        1215        1215        1215
+	Kernel: pw_vecMul(float*, float*, float*, int)
+        800        l2_subp0_total_read_sector_queries          55         135          81
+	Kernel: sgemm_sm35_ldg_nn_64x16x64x16x16
+          5        l2_subp0_total_read_sector_queries        4270       30070       18486
+	Kernel: pw_vecAdd(float*, float*, float*, int)
+        200        l2_subp0_total_read_sector_queries          71         133          83

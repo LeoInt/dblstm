@@ -1,0 +1,11 @@
+cpu - cpu implementation cblas based.
+standard - kaldi like implementation (some lines commented in code to be more kaldi like but not correct).
+fusepw - standard with fused operations after gemv.
+streambwfw - fusepw with 2 streams for each layer, fw and bw.
+streamLayer - uses multithread for having multiple streams.
+halffloat - uses half float data for weights and same as fusepw for computation.
+lowmem - does not use tmp_i buffer but just one array. is it interesting ??????
+fuse_gemvpw - fuses gemv with pw operations.
+fusexhmatr - fuses x and h matrix in one gemv (no more gemm).
+
+

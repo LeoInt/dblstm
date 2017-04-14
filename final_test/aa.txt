@@ -1,0 +1,48 @@
+==9351== NVPROF is profiling process 9351, command: /home/ubuntu/dblstm/rnn/final_test/standard/app 50 2 128
+==9351== Profiling application: /home/ubuntu/dblstm/rnn/final_test/standard/app 50 2 128
+==9351== Profiling result:
+Time(%)      Time     Calls       Avg       Min       Max  Name
+ 81.82%  187.16ms         3  62.386ms  44.258ms  93.976ms  generate_seed_pseudo(__int64, __int64, __int64, curandOrdering, curandStateXORWOW*, unsigned int*)
+  7.89%  18.050ms       200  90.249us  87.002us  92.503us  void gemv2N_kernel_val<float, int=128, int=8, int=4, int=4>(float, float, cublasGemv2Params<float>)
+  2.32%  5.3153ms       600  8.8580us  8.3330us  15.584us  pw_sigmoid(float*, float*, int)
+  2.10%  4.8092ms       800  6.0110us  5.6660us  7.5830us  pw_vecMul(float*, float*, float*, int)
+  1.66%  3.7919ms       600  6.3190us  5.9160us  7.9170us  add_pw_vecMul(float*, float*, float*, int)
+  1.41%  3.2237ms       400  8.0590us  7.5830us  10.166us  pw_tanh(float*, float*, int)
+  0.97%  2.2076ms         5  441.51us  153.84us  660.27us  sgemm_sm35_ldg_nn_64x16x64x16x16
+  0.87%  1.9935ms       200  9.9670us  9.8330us  11.834us  [CUDA memcpy DtoD]
+  0.53%  1.2082ms       200  6.0410us  5.5830us  7.4160us  pw_vecAdd(float*, float*, float*, int)
+  0.33%  756.77us        26  29.106us  4.0000us  94.586us  void gen_sequenced<curandStateXORWOW, float2, normal_args_st, __operator_&__(float2 curand_normal_scaled2<curandStateXORWOW>(curandStateXORWOW*, normal_args_st))>(curandStateXORWOW*, float2*, unsigned int, unsigned int, normal_args_st)
+  0.05%  109.59us         1  109.59us  109.59us  109.59us  _softmax_reduce(float*, float*, int, int)
+  0.03%  71.336us         8  8.9170us  8.4170us  10.751us  [CUDA memset]
+  0.01%  21.500us         3  7.1660us  1.9160us  15.584us  [CUDA memcpy HtoD]
+  0.01%  16.418us         1  16.418us  16.418us  16.418us  add_vec_to_rows(float, float*, float, float*, int, int)
+  0.00%  8.4170us         1  8.4170us  8.4170us  8.4170us  [CUDA memcpy DtoH]
+
+==9351== API calls:
+Time(%)      Time     Calls       Avg       Min       Max  Name
+ 82.34%  2.31078s        54  42.792ms  1.0840us  1.98448s  cudaFree
+  9.25%  259.65ms         2  129.82ms  178.33us  259.47ms  cudaMallocHost
+  6.51%  182.64ms      2836  64.399us  41.666us  4.6491ms  cudaLaunch
+  0.53%  14.950ms       200  74.749us  49.666us  882.92us  cudaMemcpyAsync
+  0.44%  12.253ms     10228  1.1970us     750ns  779.75us  cudaSetupArgument
+  0.36%  10.171ms        47  216.41us  8.3340us  4.7072ms  cudaMalloc
+  0.16%  4.4888ms      2863  1.5670us     833ns  1.0463ms  cudaGetLastError
+  0.14%  3.8067ms         4  951.67us  91.084us  3.3019ms  cudaMemcpy
+  0.13%  3.7748ms      2836  1.3310us     833ns  237.83us  cudaConfigureCall
+  0.05%  1.3219ms         6  220.32us  165.33us  298.75us  cudaGetDeviceProperties
+  0.03%  927.83us       249  3.7260us     750ns  199.50us  cuDeviceGetAttribute
+  0.02%  592.42us         8  74.052us  47.667us  141.67us  cudaMemset
+  0.01%  341.50us         4  85.375us  10.833us  196.67us  cudaEventSynchronize
+  0.01%  261.42us         8  32.677us  27.250us  40.667us  cudaEventRecord
+  0.01%  148.33us         3  49.444us  35.500us  62.750us  cudaThreadSynchronize
+  0.00%  58.833us         8  7.3540us  3.5000us  21.084us  cudaEventCreate
+  0.00%  44.251us         4  11.062us  10.917us  11.167us  cudaEventElapsedTime
+  0.00%  42.583us         8  5.3220us  2.5830us  19.333us  cudaEventCreateWithFlags
+  0.00%  37.081us         7  5.2970us  2.5830us  10.416us  cudaGetDevice
+  0.00%  21.668us        10  2.1660us  1.5000us  5.4170us  cudaDeviceGetAttribute
+  0.00%  16.750us         3  5.5830us  3.5000us  6.6660us  cuDeviceTotalMem
+  0.00%  10.502us         4  2.6250us  1.4170us  5.0840us  cuDeviceGetCount
+  0.00%  9.0000us         3  3.0000us  2.4170us  3.7500us  cuDeviceGetName
+  0.00%  4.5830us         2  2.2910us  2.2500us  2.3330us  cuInit
+  0.00%  4.5000us         4  1.1250us  1.0000us  1.5000us  cuDeviceGet
+  0.00%  4.3330us         2  2.1660us  2.1660us  2.1670us  cuDriverGetVersion
